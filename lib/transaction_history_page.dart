@@ -1,28 +1,11 @@
 import 'package:flutter/material.dart';
+import 'main.dart';
 
 class TransactionHistoryPage extends StatelessWidget {
   const TransactionHistoryPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Dummy data
-    final List<Map<String, dynamic>> transactions = [
-      {
-        'category': 'Makanan',
-        'icon': Icons.fastfood,
-        'note': 'Makan siang di warteg',
-        'amount': -15000,
-        'date': 'Hari ini, 12:30'
-      },
-      {
-        'category': 'Gaji',
-        'icon': Icons.attach_money,
-        'note': 'Gaji bulan Juli',
-        'amount': 5000000,
-        'date': '18 Juli 2025'
-      },
-    ];
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Riwayat Transaksi'),
@@ -36,12 +19,16 @@ class TransactionHistoryPage extends StatelessWidget {
           final tx = transactions[index];
           final isIncome = tx['amount'] > 0;
           return ListTile(
-            leading: Icon(tx['icon'], color: isIncome ? Colors.green : Colors.red),
-            title: Text(tx['category']),
+            leading: CircleAvatar(
+              backgroundColor: isIncome ? Colors.green[100] : Colors.red[100],
+              child: Icon(tx['icon'], color: isIncome ? Colors.green : Colors.red),
+            ),
+            title: Text(tx['category'],
+                style: const TextStyle(fontWeight: FontWeight.w600)),
             subtitle: Text('${tx['note']}\n${tx['date']}'),
             isThreeLine: true,
             trailing: Text(
-              '${isIncome ? '+' : '-'} Rp ${tx['amount'].abs()}',
+              '${isIncome ? '+' : '-'} Rp ${tx['amount'].abs().toStringAsFixed(0)}',
               style: TextStyle(
                 color: isIncome ? Colors.green : Colors.red,
                 fontWeight: FontWeight.bold,
